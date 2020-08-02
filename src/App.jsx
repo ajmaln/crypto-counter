@@ -1,9 +1,10 @@
 import React from 'react';
+//* Core Components
+import AddCrypto from './components/AddCrypto';
+
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <AddCrypto />
   );
 }
 
