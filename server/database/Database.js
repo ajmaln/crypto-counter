@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
-const User = require('./models/users');
 
 class Database {
   constructor() {
-    mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_CLUSTER}-gg0gq.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
+    const {
+      DB_USER,
+      DB_PASS,
+      DB_CLUSTER,
+      DB_NAME,
+    } = process.env;
+    mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@${DB_CLUSTER}.nppgy.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`, {
       useCreateIndex: true,
       useNewUrlParser: true,
     })
