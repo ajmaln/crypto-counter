@@ -9,18 +9,18 @@ const router = express.Router();
  * Handle login requests
  */
 router.post('/', async (req, res) => {
-  const { user, password } = req.body;
+  const { username, password } = req.body;
 
   //* Validate user / pass
-  if (!user) return res.status(400).send('Enter your username');
+  if (!username) return res.status(400).send('Enter your username');
   if (!password) return res.status(400).send('Enter your password');
 
   //* Check valid email
-  if (!validator.isEmail(user)) return res.status(400).send('Invalid email entered');
+  if (!validator.isEmail(username)) return res.status(400).send('Invalid email entered');
 
   //* Search for the user
-  const dbUser = await User.findOne({ user });
-  if (!dbUser) return res.status(404).send(`User ${user} not found`);
+  const dbUser = await User.findOne({ username });
+  if (!dbUser) return res.status(404).send(`${username} doesn't exist`);
 
   //* Check the password
   const passwordValidated = await bcrypt.compare(password, dbUser.hashedPassword);

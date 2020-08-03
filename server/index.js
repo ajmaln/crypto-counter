@@ -6,6 +6,7 @@ const express = require('express');
 const http = require('http');
 
 const authRouter = require('./routes/auth');
+const registerRouter = require('./routes/register');
 
 const app = express();
 const server = http.createServer(app);
@@ -23,6 +24,7 @@ app.use(cors());
 
 //* Routes
 app.use('/auth', authRouter);
+app.use('/register', registerRouter);
 
 const port = process.env.PORT || 9000;
 

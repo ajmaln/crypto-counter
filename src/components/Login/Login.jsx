@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
 //* Core Components
-import Header from './Header';
+import Header from '../Header';
 
 const Login = () => {
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const body = {
-      username: e.currentTarget.username.value,
-      password: e.currentTarget.password.value,
-    };
+    const response = await fetch('/auth', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        username: e.currentTarget.username.value,
+        password: e.currentTarget.password.value,
+      }),
+    });
 
-    console.log(body);
+    if (response.status === 200) {
+      // Logged in
+    } else {
+      setError(await response.text());
+    }
   };
 
   return (
@@ -23,9 +34,9 @@ const Login = () => {
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" noValidate onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
+              Email
             </label>
-            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" name="username" placeholder="Username" />
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" name="username" placeholder="Email" />
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
