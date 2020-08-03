@@ -18,8 +18,9 @@ const Header = () => {
       </div>
       <div className="w-full bloc lg:w-auto">
 
-        <div>
+        <div className="flex space-x-4">
           <a href="login" className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+          <a href="register" className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Register</a>
         </div>
       </div>
     </nav>
