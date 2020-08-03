@@ -8,11 +8,14 @@
     "@testing-library/user-event": "^7.2.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "mongoose": "^5.9.27",
+    "passport": "^0.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "tailwindcss": "^1.6.0"
+    "tailwindcss": "^1.6.0",
+    "validator": "^13.1.1"
   },
   "scripts": {
     "build:tailwind": "tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
