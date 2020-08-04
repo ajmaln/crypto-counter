@@ -9,6 +9,20 @@ In the project directory, you can run:
 Run the server and client concurrently<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+## Features
+
+- [x] Register
+- [x] Login
+- [x] Header
+- [x] Add crypto row
+
+## TODO
+
+- [x] Session
+- [x] Cookies
+- [x] Component for displaying coin list
+- [x] Component for showing total net value
+
 ## Dependencies
 
 This project uses the following dependencies:
