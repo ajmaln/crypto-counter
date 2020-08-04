@@ -9,11 +9,10 @@ In the project directory, you can run:
 Run the server and client concurrently<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-<h3 align="center">Dependencies</h3>
+## Dependencies
 
 This project uses the following dependencies:
 
-mongoose
 - `react` - v16.8 or above required for **react hooks**.
 - `react-dom` - v16.8 or above.
 - `mongoose` - ODM used for MongoDB to create models and CRUD.
@@ -21,7 +20,7 @@ mongoose
 - `validator` - Utility when parsing user input on the server.
 - `tailwindcss` - CSS library that I am testing out.
 
-<h3 align="center">Environmental variables</h3>
+## Environmental variables
 
 The environment variables [will be inlined during build time](https://nextjs.org/docs#build-time-configuration) and thus should not be used in front-end codebase.
 
