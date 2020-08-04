@@ -22,7 +22,7 @@ This project uses the following dependencies:
 
 ## Environmental variables
 
-The environment variables [will be inlined during build time](https://nextjs.org/docs#build-time-configuration) and thus should not be used in front-end codebase.
+The environment variables will be inlined during build time.
 
 Required environmental variables in this project include:
 
