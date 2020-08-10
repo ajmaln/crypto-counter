@@ -5,6 +5,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from './App';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+//* css
+import 'react-datepicker/dist/react-datepicker.css';
 
 ReactDOM.render(
   <BrowserRouter>

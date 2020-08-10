@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Footer = () => {
-  const [termsOpen, setTermsOpen] = useState(true);
+  const [termsOpen, setTermsOpen] = useState(false);
   return (
     <footer className={`flex flex-col items-center justify-center fixed bottom-0 w-full bg-purple-500 p-6 mt-10${termsOpen ? ' divide-y divide-gray-400 space-y-6' : ''}`}>
       <div className="flex flex-row space-x-2 divide-x divide-gray-400">

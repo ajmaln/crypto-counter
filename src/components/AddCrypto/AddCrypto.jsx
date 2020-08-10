@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
 
-const AddCrypto = () => {
-  const [cryptos, setCryptos] = useState({});
+const AddCrypto = ({ cryptos }) => {
   const [selection, setSelection] = useState({});
-
-  const getCryptoList = async () => {
-    const response = await fetch('https://api.coingecko.com/api/v3/coins');
-    const data = await response.json();
-    setCryptos(data);
-    setSelection(data[0]);
-    console.log(data);
-  };
+  const [date, setDate] = useState(null);
 
   const handleSelection = (e) => {
     const key = e.currentTarget.options.selectedIndex;
     setSelection(cryptos[key]);
   };
 
-  useEffect(() => {
-    getCryptoList();
-  }, []);
+  const handleDateSelection = (newDate) => {
+    setDate(newDate);
+  };
 
   return (
     <div className="flex items-center space-x-4 m-5 p-6 bg-purple-200 border-solid border-2 border-purple-700 rounded-lg w-8/12">
@@ -38,6 +31,12 @@ const AddCrypto = () => {
       </div>
       <input className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" type="text" name="amount" placeholder="Amount Brought" />
       <input className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" type="text" name="price" placeholder="Price Paid" />
+      <DatePicker
+        className="appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+        selected={date}
+        onChange={handleDateSelection}
+        placeholderText="Purchase date"
+      />
       <img className="fill-current min-h-full w-8 cursor-pointer" src={`${window.location.origin}/add.svg`} alt="Add" />
     </div>
   );
