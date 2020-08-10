@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-  name: {
+  coin: {
+    type: String,
+    required: true,
+  },
+  symbol: {
     type: String,
     required: true,
   },
@@ -13,6 +17,9 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  purchaseDate: {
+    type: Date,
+  },
 });
 
-module.exports = mongoose.model('Crypto', userSchema);
+module.exports = mongoose.model('Coins', userSchema);

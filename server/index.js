@@ -7,6 +7,7 @@ const http = require('http');
 
 const authRouter = require('./routes/auth');
 const registerRouter = require('./routes/register');
+const coinsRouter = require('./routes/coins');
 
 const app = express();
 const server = http.createServer(app);
@@ -25,6 +26,7 @@ app.use(cors());
 //* Routes
 app.use('/auth', authRouter);
 app.use('/register', registerRouter);
+app.use('/coins', coinsRouter);
 
 const port = process.env.PORT || 9000;
 

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Crypto = require('./crypto');
+const Coins = require('./coins');
 
 const userSchema = mongoose.Schema({
   username: {
@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
     type: String,
     default: '',
   },
-  crypto: Crypto.schema,
+  coins: [{ type: Coins.schema }],
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -11,6 +11,7 @@ class Database {
     mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}@${DB_CLUSTER}.nppgy.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`, {
       useCreateIndex: true,
       useNewUrlParser: true,
+      useUnifiedTopology: true,
     })
       .then(() => {
         console.log('Database connection successful');
