@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 //* Core Components
 import Header from '../Header';
+import Footer from '../Footer';
 
 const Register = () => {
   const [error, setError] = useState('');
@@ -35,9 +36,9 @@ const Register = () => {
   return (
     <div>
       <Header />
-      <div className="flex items-center justify-center">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg" noValidate onSubmit={handleSubmit}>
-          {error ? <p className="text-red-500 text-xs italic flex justify-center py-6">{error}</p> : null}
+      <div className="flex items-center justify-center min-h-screen bg-purple-200">
+        <form className="bg-purple-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg" noValidate onSubmit={handleSubmit}>
+          {error ? <p className="text-yellow-300 font-extrabold text-base italic flex justify-center pb-6">{error}</p> : null}
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="first-name">
@@ -77,15 +78,16 @@ const Register = () => {
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <button className="bg-black hover:bg-opacity-50 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
               Register
             </button>
-            <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/login">
+            <a className="inline-block align-baseline font-bold text-sm text-white hover:text-gray-300" href="/login">
               Already Registered?
             </a>
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 };
