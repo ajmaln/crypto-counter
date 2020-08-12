@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 //* Core Components
 import Header from '../Header';
 import Footer from '../Footer';
+//* HTTP Requests
+import { isLoggedIn } from '../../http/Auth';
 
 const Register = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState('');
+  const history = useHistory();
+
+  const checkLoggedIn = async () => {
+    setLoggedIn(await isLoggedIn());
+  };
+
+  useEffect(() => {
+    checkLoggedIn();
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn) history.push('/');
+  }, [loggedIn]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,14 +45,17 @@ const Register = () => {
 
     if (response.status === 201) {
       setError('');
+      setLoggedIn(true);
     } else {
-      setError(await response.text());
+      // eslint-disable-next-line no-shadow
+      const { error } = await response.json();
+      setError(error);
     }
   };
 
   return (
     <div>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <div className="flex items-center justify-center min-h-screen bg-purple-200">
         <form className="bg-purple-500 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg" noValidate onSubmit={handleSubmit}>
           {error ? <p className="text-yellow-300 font-extrabold text-base italic flex justify-center pb-6">{error}</p> : null}

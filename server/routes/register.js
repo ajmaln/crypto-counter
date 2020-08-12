@@ -20,11 +20,11 @@ router.post('/', async (req, res) => {
   const username = validator.normalizeEmail(email);
 
   //* Validate input
-  if (!firstName || !lastName || !username || !password || !confirmPassword) return res.status(400).send('Missing field(s)');
-  if (!validator.isEmail(username)) return res.status(400).send('Invalid email entered');
-  if (password !== confirmPassword) return res.status(400).send('Passwords must match');
+  if (!firstName || !lastName || !username || !password || !confirmPassword) return res.status(400).json({ error: 'Missing field(s)' });
+  if (!validator.isEmail(username)) return res.status(400).json({ error: 'Invalid email entered' });
+  if (password !== confirmPassword) return res.status(400).json({ error: 'Passwords must match' });
   //* Validate strong password
-  if (!/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%@&? "]).*$/.test(password)) return res.status(400).send('Password must contain 8 characters and at least one number, one letter and one unique character');
+  if (!/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%@&? "]).*$/.test(password)) return res.status(400).json({ error: 'Password must contain 8 characters and at least one number, one letter and one unique character' });
 
   //* Attempt to create the user
   try {
@@ -38,9 +38,16 @@ router.post('/', async (req, res) => {
       lastName,
     });
     user.save();
-    return res.status(201).send('User created');
+    req.logIn(user, (err) => {
+      if (err) return res.status(400).json({ error: 'Failed to create user.' });
+      res.status(201).json({
+        user,
+      });
+    });
+
+    return res.status(201).json({ message: 'User created' });
   } catch (err) {
-    return res.status(400).send('Failed to create user. Try again later');
+    return res.status(400).json({ error: 'Failed to create user.' });
   }
 });
 

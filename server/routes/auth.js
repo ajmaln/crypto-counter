@@ -1,33 +1,36 @@
-const bcrypt = require('bcrypt');
 const express = require('express');
+const passport = require('passport');
 const validator = require('validator');
-const User = require('../database/models/users');
 
 const router = express.Router();
+
+router.get('/', async (req, res) => {
+  if (req.isAuthenticated()) return res.status(200).send('yes');
+  return res.status(200).send('no');
+});
 
 /**
  * Handle login requests
  */
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   const { username, password } = req.body;
 
   //* Validate user / pass
-  if (!username) return res.status(400).send('Enter your username');
-  if (!password) return res.status(400).send('Enter your password');
+  if (!username) return res.status(400).json({ error: 'Enter your username' });
+  if (!password) return res.status(400).json({ error: 'Enter your password' });
 
   //* Check valid email
-  if (!validator.isEmail(username)) return res.status(400).send('Invalid email entered');
+  if (!validator.isEmail(username)) return res.status(400).json({ error: 'Invalid email entered' });
 
-  //* Search for the user
-  const dbUser = await User.findOne({ username });
-  if (!dbUser) return res.status(404).send(`${username} doesn't exist`);
-
-  //* Check the password
-  const passwordValidated = await bcrypt.compare(password, dbUser.hashedPassword);
-  if (passwordValidated) res.status(201).json(dbUser);
-  else return res.status(403).send('Password is incorrect');
-
-  return res.status(400).send('Something went wrong');
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return res.status(400).json({ error: err });
+    if (!user) return res.status(400).json({ error: info.message });
+    // eslint-disable-next-line no-shadow
+    req.logIn(user, (err) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).json({ message: 'Logged in' });
+    });
+  })(req, res, next);
 });
 
 module.exports = router;

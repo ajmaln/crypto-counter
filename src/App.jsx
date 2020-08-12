@@ -5,10 +5,17 @@ import AddCrypto from './components/AddCrypto/AddCrypto';
 import Portfolio from './components/Portfolio/Portfolio';
 import Header from './components/Header';
 import Footer from './components/Footer';
+//* HTTP Requests
+import { isLoggedIn } from './http/Auth';
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [cryptos, setCryptos] = useState({});
   const [myCryptos, setMyCryptos] = useState({});
+
+  const checkLoggedIn = async () => {
+    setLoggedIn(await isLoggedIn());
+  };
 
   const getCryptoList = async () => {
     const response = await fetch('https://api.coingecko.com/api/v3/coins');
@@ -17,12 +24,13 @@ function App() {
   };
 
   useEffect(() => {
+    checkLoggedIn();
     getCryptoList();
   }, []);
 
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <div className="min-h-screen mb-20">
         <div className="flex items-center justify-center">
           <AddCrypto cryptos={cryptos} />

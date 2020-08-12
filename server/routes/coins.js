@@ -21,7 +21,6 @@ router.post('/', async (req, res) => {
       coin, symbol, quantity, price, purchaseDate,
     });
     const newUser = await user.save();
-    console.log(newUser);
     return res.status(201).json({ coins: newUser.coins });
   }
   return res.status(400).end();

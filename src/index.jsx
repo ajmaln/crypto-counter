@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 //* Core Components
 import App from './App';
 import Login from './components/Login/Login';
+import Logout from './components/Logout/Logout';
 import Register from './components/Register/Register';
 //* css
 import 'react-datepicker/dist/react-datepicker.css';
@@ -13,6 +14,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/" exact component={App} />
       <Route path="/login" exact component={Login} />
+      <Route path="/logout" exact component={Logout} />
       <Route path="/register" exact component={Register} />
     </Switch>
   </BrowserRouter>,

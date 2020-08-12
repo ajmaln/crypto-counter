@@ -10,7 +10,6 @@ const AddCrypto = ({ cryptos }) => {
 
   const handleSelection = (e) => {
     const key = e.currentTarget.options.selectedIndex;
-    console.log(key);
     setCoin(cryptos[key]);
   };
 
@@ -37,7 +36,6 @@ const AddCrypto = ({ cryptos }) => {
       price,
       purchaseDate: date,
     };
-    console.log('handlesubmit\n', body);
 
     const response = await fetch('/coins', {
       headers: {
