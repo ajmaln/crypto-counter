@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+
+A cryptocurrency web application to add your crypto investments and track their performance overtime. You can count your portfolio of cryptocurrencies across multiple wallets.
 
 ## Available Scripts
 
