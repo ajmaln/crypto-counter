@@ -11,17 +11,26 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Features
 
-- [x] Register
-- [x] Login
-- [x] Header
-- [x] Add crypto row
+- [x] Register.
+- [x] Login.
+- [x] Authentication.
+- [x] Session.
+- [x] Responsive pages.
 
 ## TODO
 
-- [x] Session
-- [x] Cookies
-- [x] Component for displaying coin list
-- [x] Component for showing total net value
+- [x] Component for displaying all the crypocurrencies added.
+- [x] Component for showing total net value of all added coins.
+- [x] Currency converter component to compare prices in different currencies.
+- [x] Redux Persist for not logged in visitors.
+
+## API
+
+This project leverages [CoinGecko API](https://www.coingecko.com/en/api) which is a free cryptocurrency API that provides a lot of useful data that this app uses, including:
+
+- [x] Historical price data for a coin to compute the percent increase / decrease.
+- [x] A coin's current trading price.
+- [x] Coin symbol and metadata such as the thumb.
 
 ## Dependencies
 
