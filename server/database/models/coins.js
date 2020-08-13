@@ -13,10 +13,6 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  price: {
-    type: Number,
-    required: true,
-  },
   purchaseDate: {
     type: Date,
   },

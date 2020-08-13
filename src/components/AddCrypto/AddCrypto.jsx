@@ -5,7 +5,6 @@ const AddCrypto = ({ cryptos }) => {
   const [error, setError] = useState('');
   const [coin, setCoin] = useState({});
   const [quantity, setQuantity] = useState(null);
-  const [price, setPrice] = useState(null);
   const [date, setDate] = useState(null);
 
   const handleSelection = (e) => {
@@ -18,11 +17,6 @@ const AddCrypto = ({ cryptos }) => {
     setQuantity(e.currentTarget.value);
   };
 
-  const handlePriceChange = (e) => {
-    e.preventDefault();
-    setPrice(e.currentTarget.value);
-  };
-
   const handleDateSelection = (newDate) => {
     setDate(newDate);
   };
@@ -33,7 +27,6 @@ const AddCrypto = ({ cryptos }) => {
       coin: coin.name,
       symbol: coin.symbol,
       quantity,
-      price,
       purchaseDate: date,
     };
 
@@ -70,7 +63,6 @@ const AddCrypto = ({ cryptos }) => {
           </div>
         </div>
         <input className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm" type="text" name="quantity" placeholder="Quantity Brought" onChange={handleAmountChange} />
-        <input className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm" type="text" name="price" placeholder="Price Paid" onChange={handlePriceChange} />
         <div className="appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm">
           <DatePicker
             className=""
