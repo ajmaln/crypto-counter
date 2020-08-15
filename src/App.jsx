@@ -8,10 +8,33 @@ import Footer from './components/Footer';
 //* HTTP Requests
 import { isLoggedIn } from './http/Auth';
 
+const arr = [
+  {
+    coin: 'BTC',
+    quantity: 0.3254984948,
+    change: '+40%',
+  },
+  {
+    coin: 'Ethereum',
+    quantity: 10,
+    change: '+30%',
+  },
+  {
+    coin: 'XRP',
+    quantity: 20000,
+    change: '-5%',
+  },
+  {
+    coin: 'Enjin',
+    quantity: 50000,
+    change: '+200%',
+  },
+];
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [cryptos, setCryptos] = useState({});
-  const [myCryptos, setMyCryptos] = useState({});
+  const [myCryptos, setMyCryptos] = useState(arr);
 
   const checkLoggedIn = async () => {
     setLoggedIn(await isLoggedIn());
