@@ -4,12 +4,14 @@ const User = require('../database/models/users');
 
 const router = express.Router();
 
+router.get('/', async (req, res) => res.status(200).json({ coins: req.user.coins }));
+
 router.post('/', async (req, res) => {
   const {
-    username, coin, symbol, quantity, purchaseDate,
+    username, id, name, symbol, quantity, purchaseDate,
   } = req.body;
 
-  if (!coin || !symbol) return res.status(400).send('Select a cryptocurrency');
+  if (!id || !name || !symbol) return res.status(400).send('Select a cryptocurrency');
   if ((typeof quanity === 'number') || (typeof quantity === 'string' && !validator.isNumeric(quantity))) return res.status(400).send('Quantity must be a number');
 
   const filter = { username };
@@ -17,7 +19,7 @@ router.post('/', async (req, res) => {
 
   if (user) {
     await user.coins.push({
-      coin, symbol, quantity, purchaseDate,
+      id, name, symbol, quantity, purchaseDate,
     });
     const newUser = await user.save();
     return res.status(201).json({ coins: newUser.coins });

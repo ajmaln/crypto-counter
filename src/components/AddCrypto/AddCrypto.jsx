@@ -22,12 +22,9 @@ const AddCrypto = ({ cryptos }) => {
   };
 
   const handleSubmit = async () => {
+    const { id, name, symbol } = coin;
     const body = {
-      username: 'mrjoshuaali@yahoo.co.uk',
-      coin: coin.name,
-      symbol: coin.symbol,
-      quantity,
-      purchaseDate: date,
+      username: 'mrjoshuaali@yahoo.co.uk', id, name, symbol, quantity, purchaseDate: date,
     };
 
     const response = await fetch('/coins', {
@@ -48,7 +45,7 @@ const AddCrypto = ({ cryptos }) => {
 
   return (
     <>
-      <div className="flex items-center space-x-4 m-5 p-6 bg-purple-200 border-solid border-2 border-purple-700 rounded-lg w-10/12">
+      <div className="flex items-center space-x-4 m-5 p-6 bg-purple-200 border-solid border border-purple-700 rounded-lg w-10/12">
         <div className="inline-block relative block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
           <select onChange={handleSelection} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm">
             {Object.keys(cryptos).map((key) => (
@@ -71,7 +68,7 @@ const AddCrypto = ({ cryptos }) => {
             placeholderText="Purchase date"
           />
         </div>
-        <span className="fill-current min-h-full w-full cursor-pointer" role="button" tabIndex={0} onClick={handleSubmit}>
+        <span style={{ display: 'contents' }} className="fill-current min-h-full w-full cursor-pointer" role="button" tabIndex={0} onClick={handleSubmit}>
           <img className="fill-current min-h-full w-8 cursor-pointer" src={`${window.location.origin}/add.svg`} alt="Add" />
         </span>
       </div>

@@ -28,6 +28,7 @@ router.post('/', async (req, res, next) => {
     // eslint-disable-next-line no-shadow
     req.logIn(user, (err) => {
       if (err) return res.status(400).send(err);
+      req.user = user;
       return res.status(200).json({ message: 'Logged in' });
     });
   })(req, res, next);
