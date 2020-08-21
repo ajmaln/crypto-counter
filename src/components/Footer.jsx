@@ -3,12 +3,18 @@ import React, { useState } from 'react';
 const Footer = () => {
   const [termsOpen, setTermsOpen] = useState(false);
   return (
-    <footer className={`flex flex-col items-center justify-center fixed bottom-0 w-full bg-purple-500 p-6 mt-10${termsOpen ? ' divide-y divide-gray-400 space-y-6' : ''}`}>
+    <footer className={`flex flex-col items-center justify-center fixed bottom-0 w-full bg-purple-500 py-6 mt-10${termsOpen ? ' divide-y divide-gray-400 space-y-6' : ''}`}>
       <div className="flex flex-row space-x-2 divide-x divide-gray-400">
-        <p className="text-white">&copy; Copyright 2020 trackmycrypto.co.uk</p>
+        <p className="text-white">
+          &copy; Copyright
+          {' '}
+          {new Date().getFullYear()}
+          {' '}
+          trackmycrypto.co.uk
+        </p>
         <a className="text-yellow-400 hover:text-yellow-500 px-2" href="#terms" onClick={() => setTermsOpen(!termsOpen)}>Terms &amp; Conditions</a>
       </div>
-      <div className="flex flex-col items-center justify-center w-1/2">
+      <div className="flex flex-col items-center justify-center md:w-1/2 px-2 text-center">
         <p className={`${termsOpen ? ' ' : 'hidden '}text-white`}>
           TrackMyCrypto disclaims all liabilities regarding the content of these
           calculators and any use thereof that could be made by any person.
