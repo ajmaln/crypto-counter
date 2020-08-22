@@ -14,7 +14,7 @@ const Footer = () => {
         </p>
         <a className="text-yellow-400 hover:text-yellow-500 px-2" href="#terms" onClick={() => setTermsOpen(!termsOpen)}>Terms &amp; Conditions</a>
       </div>
-      <div className="flex flex-col items-center justify-center md:w-1/2 px-2 text-center">
+      <div className="flex flex-col items-center justify-center xs:w-full sm:w-2/3 md:w-2/3 px-2 text-center">
         <p className={`${termsOpen ? ' ' : 'hidden '}text-white`}>
           TrackMyCrypto disclaims all liabilities regarding the content of these
           calculators and any use thereof that could be made by any person.

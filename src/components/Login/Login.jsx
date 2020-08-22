@@ -21,7 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     if (loggedIn) history.push('/');
-  }, [loggedIn]);
+  }, [loggedIn, history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

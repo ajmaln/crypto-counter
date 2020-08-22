@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-shadow */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './assets/css/tailwind.output.css';
 //* Core Components
 import AddCrypto from './components/AddCrypto/AddCrypto';
@@ -16,7 +16,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [cryptos, setCryptos] = useState({});
   const [myCryptos, setMyCryptos] = useState([]);
-  const [ISO, setISO] = useState('usd');
+  const [ISO] = useState('usd');
 
   const checkLoggedIn = async () => {
     setLoggedIn(await isLoggedIn());
@@ -28,7 +28,7 @@ function App() {
     setCryptos(data);
   };
 
-  const getMyCryptos = async () => {
+  const getMyCryptos = useCallback(async () => {
     if (!loggedIn) return;
     const response = await fetch('/coins');
     const { coins } = await response.json();
@@ -36,7 +36,7 @@ function App() {
     for (let i = 0; i < coins.length; i += 1) {
       const { id } = coins[i];
       const purchaseDate = new Date(coins[i].purchaseDate).toLocaleDateString('en-GB').replace(/\//g, '-');
-      const now = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
+      const now = new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString('en-GB').replace(/\//g, '-');
 
       {
         const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/history?date=${purchaseDate}`);
@@ -48,6 +48,7 @@ function App() {
         const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/history?date=${now}`);
         const data = await response.json();
         if (response.status === 200) coins[i].marketData = data.market_data;
+        coins[i].image = data.image;
       }
       if (coins[i].marketData && coins[i].buyTimeMarketData) {
         // eslint-disable-next-line no-multi-assign
@@ -56,9 +57,23 @@ function App() {
         const price = coins[i].price = coins[i].marketData.current_price[ISO];
         coins[i].change = percentChange(buyPrice, price);
       }
-      setMyCryptos(coins);
     }
-  };
+    setMyCryptos(coins);
+  }, [ISO, loggedIn]);
+
+  const deleteCoin = useCallback((coin) => async () => {
+    const response = await fetch('/coins', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'DELETE',
+      body: JSON.stringify({
+        _id: coin._id,
+      }),
+    });
+    if (response.status === 200) getMyCryptos();
+  }, [getMyCryptos]);
 
   useEffect(() => {
     checkLoggedIn();
@@ -67,17 +82,17 @@ function App() {
 
   useEffect(() => {
     getMyCryptos();
-  }, [loggedIn]);
+  }, [loggedIn, getMyCryptos]);
 
   return (
     <>
       <Header loggedIn={loggedIn} />
       <div className="min-h-screen mb-20">
         <div className="flex items-center justify-center">
-          <AddCrypto cryptos={cryptos} />
+          <AddCrypto cryptos={cryptos} getMyCryptos={getMyCryptos} />
         </div>
         <div className="flex items-center justify-center">
-          <Portfolio coins={myCryptos} />
+          <Portfolio coins={myCryptos} deleteCoin={deleteCoin} />
         </div>
       </div>
       <Footer />
