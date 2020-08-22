@@ -25,7 +25,7 @@ const AddCrypto = ({ cryptos, getMyCryptos, setIsLoading }) => {
     setIsLoading(true);
     const { id, name, symbol } = coin;
     const body = {
-      username: 'mrjoshuaali@yahoo.co.uk', id, name, symbol, quantity, purchaseDate: date,
+      id, name, symbol, quantity, purchaseDate: date,
     };
 
     const response = await fetch('/coins', {
@@ -63,16 +63,16 @@ const AddCrypto = ({ cryptos, getMyCryptos, setIsLoading }) => {
           </div>
         </div>
         <input className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm" type="text" name="quantity" placeholder="Quantity Brought" onChange={handleAmountChange} />
-        <div className="appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm">
+        <div className="appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-sm">
           <DatePicker
-            className=""
+            className="w-full"
             selected={date}
             onChange={handleDateSelection}
             placeholderText="Purchase date"
           />
         </div>
         <span style={{ display: 'contents' }} className="fill-current min-h-full w-full cursor-pointer" role="button" tabIndex={0} onClick={handleSubmit}>
-          <img className="fill-current min-h-full w-8 cursor-pointer" src={`${window.location.origin}/add.svg`} alt="Add" />
+          <img className="fill-current min-h-full w-8 ml-4 cursor-pointer" src={`${window.location.origin}/add.svg`} alt="Add" />
         </span>
       </div>
     </>

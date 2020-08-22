@@ -23,10 +23,11 @@ const override = css`
 `;
 
 function App() {
-  const [minViewportH, setMinViewportH] = useState(true);
+  const [minViewportH, setMinViewportH] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [cryptos, setCryptos] = useState({});
+  const [buyTotal, setBuyTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [myCryptos, setMyCryptos] = useState([]);
   const [ISO] = useState('usd');
@@ -46,6 +47,7 @@ function App() {
     const response = await fetch('/coins');
     const { coins } = await response.json();
     let total = 0;
+    let buyTotal = 0;
 
     for (let i = 0; i < coins.length; i += 1) {
       const { id } = coins[i];
@@ -71,9 +73,12 @@ function App() {
         const price = coins[i].price = coins[i].marketData.current_price[ISO];
         coins[i].change = percentChange(buyPrice, price);
 
-        // total += coins[i].marketData.current_price[ISO] * coins[i];
+        buyTotal += coins[i].buyTimeMarketData.current_price[ISO] * coins[i].quantity;
+        total += coins[i].marketData.current_price[ISO] * coins[i].quantity;
       }
     }
+    setTotal(total);
+    setBuyTotal(buyTotal);
     setMyCryptos(coins);
     setIsLoading(false);
   }, [ISO, loggedIn]);
@@ -96,8 +101,8 @@ function App() {
 
   const updateViewport = (isTermsOpen) => {
     console.log('upd');
-    setMinViewportH(isTermsOpen);
-    console.log(minViewportH);
+    setMinViewportH(!isTermsOpen);
+    console.log(!minViewportH);
   };
 
   useEffect(() => {
@@ -121,9 +126,9 @@ function App() {
         />
       )
         : (
-          <div className={`mb-20${!minViewportH ? ' min-h-screen' : ''}`}>
+          <div className={`mb-20${minViewportH ? ' min-h-screen' : ''}`}>
             <div className="flex items-center justify-center">
-              <Summary total={total} />
+              <Summary total={total} buyTotal={buyTotal} />
             </div>
             <div className="flex items-center justify-center">
               <AddCrypto
@@ -132,7 +137,7 @@ function App() {
                 setIsLoading={setIsLoading}
               />
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center overflow-x-auto">
               <Portfolio coins={myCryptos} deleteCoin={deleteCoin} />
             </div>
           </div>
