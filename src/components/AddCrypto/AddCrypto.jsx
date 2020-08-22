@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
-const AddCrypto = ({ cryptos, getMyCryptos, setIsLoading }) => {
+const AddCrypto = ({ cryptos, getMyCoins, setIsLoading }) => {
   const [error, setError] = useState('');
   const [coin, setCoin] = useState({});
   const [quantity, setQuantity] = useState(null);
@@ -38,7 +38,7 @@ const AddCrypto = ({ cryptos, getMyCryptos, setIsLoading }) => {
     });
     if (response.status === 201) {
       await response.json();
-      getMyCryptos();
+      getMyCoins();
       // Set the state here
     } else {
       setError(await response.text());
