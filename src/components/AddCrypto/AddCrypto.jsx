@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
-const AddCrypto = ({ cryptos, getMyCryptos }) => {
+const AddCrypto = ({ cryptos, getMyCryptos, setIsLoading }) => {
   const [error, setError] = useState('');
   const [coin, setCoin] = useState({});
   const [quantity, setQuantity] = useState(null);
@@ -22,6 +22,7 @@ const AddCrypto = ({ cryptos, getMyCryptos }) => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     const { id, name, symbol } = coin;
     const body = {
       username: 'mrjoshuaali@yahoo.co.uk', id, name, symbol, quantity, purchaseDate: date,
@@ -41,6 +42,7 @@ const AddCrypto = ({ cryptos, getMyCryptos }) => {
       // Set the state here
     } else {
       setError(await response.text());
+      setIsLoading(false);
     }
   };
 

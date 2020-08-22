@@ -2,6 +2,8 @@
 /* eslint-disable no-shadow */
 import React, { useState, useEffect, useCallback } from 'react';
 import './assets/css/tailwind.output.css';
+import { css } from '@emotion/core';
+import HashLoader from 'react-spinners/HashLoader';
 //* Core Components
 import AddCrypto from './components/AddCrypto/AddCrypto';
 import Portfolio from './components/Portfolio/Portfolio';
@@ -12,7 +14,15 @@ import { isLoggedIn } from './http/Auth';
 //* Utility
 import { percentChange } from './utils/calculations';
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+  height: 100vh;
+`;
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [cryptos, setCryptos] = useState({});
   const [myCryptos, setMyCryptos] = useState([]);
@@ -59,9 +69,11 @@ function App() {
       }
     }
     setMyCryptos(coins);
+    setIsLoading(false);
   }, [ISO, loggedIn]);
 
   const deleteCoin = useCallback((coin) => async () => {
+    setIsLoading(true);
     const response = await fetch('/coins', {
       headers: {
         Accept: 'application/json',
@@ -73,6 +85,7 @@ function App() {
       }),
     });
     if (response.status === 200) getMyCryptos();
+    else setIsLoading(false);
   }, [getMyCryptos]);
 
   useEffect(() => {
@@ -87,14 +100,28 @@ function App() {
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <div className="min-h-screen mb-20">
-        <div className="flex items-center justify-center">
-          <AddCrypto cryptos={cryptos} getMyCryptos={getMyCryptos} />
-        </div>
-        <div className="flex items-center justify-center">
-          <Portfolio coins={myCryptos} deleteCoin={deleteCoin} />
-        </div>
-      </div>
+      {isLoading ? (
+        <HashLoader
+          css={override}
+          size={50}
+          color="#9f7aea"
+          loading={isLoading}
+        />
+      )
+        : (
+          <div className="min-h-screen mb-20">
+            <div className="flex items-center justify-center">
+              <AddCrypto
+                cryptos={cryptos}
+                getMyCryptos={getMyCryptos}
+                setIsLoading={setIsLoading}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <Portfolio coins={myCryptos} deleteCoin={deleteCoin} />
+            </div>
+          </div>
+        )}
       <Footer />
     </>
   );
