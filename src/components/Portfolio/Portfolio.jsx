@@ -23,7 +23,7 @@ const Portfolio = ({ coins, deleteCoin }) => (
               {coin.name}
             </span>
           </td>
-          <td className="border-solid border-purple-300 border-r px-4 py-2">{coin.quantity}</td>
+          <td className="border-solid border-purple-300 border-r px-4 py-2 text-center">{coin.quantity}</td>
           <td className="border-solid border-purple-300 border-r px-4 py-2">{new Date(coin.purchaseDate).toLocaleDateString('en-GB')}</td>
           <td className="border-solid border-purple-300 border-r px-4 py-2">
             <p>{twoDecimalPlaces(coin.buyPrice * coin.quantity)}</p>
@@ -34,7 +34,7 @@ const Portfolio = ({ coins, deleteCoin }) => (
             </p>
           </td>
           <td className="border-solid border-purple-300 border-r px-4 py-2">
-            <p>{twoDecimalPlaces(coin.price * coin.quantity)}</p>
+            <p className="text-center">{twoDecimalPlaces(coin.price * coin.quantity)}</p>
             <p className="text-xs text-center font-bold">
               {'('}
               {twoDecimalPlaces(coin.price)}

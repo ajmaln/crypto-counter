@@ -7,6 +7,7 @@ import HashLoader from 'react-spinners/HashLoader';
 //* Core Components
 import AddCrypto from './components/AddCrypto/AddCrypto';
 import Portfolio from './components/Portfolio/Portfolio';
+import Summary from './components/Summary/Summary';
 import Header from './components/Header';
 import Footer from './components/Footer';
 //* HTTP Requests
@@ -22,9 +23,11 @@ const override = css`
 `;
 
 function App() {
+  const [minViewportH, setMinViewportH] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [cryptos, setCryptos] = useState({});
+  const [total, setTotal] = useState(0);
   const [myCryptos, setMyCryptos] = useState([]);
   const [ISO] = useState('usd');
 
@@ -38,10 +41,11 @@ function App() {
     setCryptos(data);
   };
 
-  const getMyCryptos = useCallback(async () => {
+  const getMyCoins = useCallback(async () => {
     if (!loggedIn) return;
     const response = await fetch('/coins');
     const { coins } = await response.json();
+    let total = 0;
 
     for (let i = 0; i < coins.length; i += 1) {
       const { id } = coins[i];
@@ -66,6 +70,8 @@ function App() {
         // eslint-disable-next-line no-multi-assign
         const price = coins[i].price = coins[i].marketData.current_price[ISO];
         coins[i].change = percentChange(buyPrice, price);
+
+        // total += coins[i].marketData.current_price[ISO] * coins[i];
       }
     }
     setMyCryptos(coins);
@@ -84,9 +90,15 @@ function App() {
         _id: coin._id,
       }),
     });
-    if (response.status === 200) getMyCryptos();
+    if (response.status === 200) getMyCoins();
     else setIsLoading(false);
-  }, [getMyCryptos]);
+  }, [getMyCoins]);
+
+  const updateViewport = (isTermsOpen) => {
+    console.log('upd');
+    setMinViewportH(isTermsOpen);
+    console.log(minViewportH);
+  };
 
   useEffect(() => {
     checkLoggedIn();
@@ -94,8 +106,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getMyCryptos();
-  }, [loggedIn, getMyCryptos]);
+    getMyCoins();
+  }, [loggedIn, getMyCoins]);
 
   return (
     <>
@@ -109,11 +121,14 @@ function App() {
         />
       )
         : (
-          <div className="min-h-screen mb-20">
+          <div className={`mb-20${!minViewportH ? ' min-h-screen' : ''}`}>
+            <div className="flex items-center justify-center">
+              <Summary total={total} />
+            </div>
             <div className="flex items-center justify-center">
               <AddCrypto
                 cryptos={cryptos}
-                getMyCryptos={getMyCryptos}
+                getMyCoins={getMyCoins}
                 setIsLoading={setIsLoading}
               />
             </div>
@@ -122,7 +137,7 @@ function App() {
             </div>
           </div>
         )}
-      <Footer />
+      <Footer updateViewport={updateViewport} />
     </>
   );
 }

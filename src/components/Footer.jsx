@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 
-const Footer = () => {
+const Footer = ({ updateViewport }) => {
   const [termsOpen, setTermsOpen] = useState(false);
+
+  const handleTermsChange = () => {
+    setTermsOpen(!termsOpen);
+    if (updateViewport) updateViewport(termsOpen);
+  };
+
   return (
     <footer className={`flex flex-col items-center justify-center fixed bottom-0 w-full bg-purple-500 py-6 mt-10${termsOpen ? ' divide-y divide-gray-400 space-y-6' : ''}`}>
       <div className="flex flex-row space-x-2 divide-x divide-gray-400">
@@ -12,7 +18,7 @@ const Footer = () => {
           {' '}
           trackmycrypto.co.uk
         </p>
-        <a className="text-yellow-400 hover:text-yellow-500 px-2" href="#terms" onClick={() => setTermsOpen(!termsOpen)}>Terms &amp; Conditions</a>
+        <a className="text-yellow-400 hover:text-yellow-500 px-2" href="#terms" onClick={handleTermsChange}>Terms &amp; Conditions</a>
       </div>
       <div className="flex flex-col items-center justify-center xs:w-full sm:w-2/3 md:w-2/3 px-2 text-center">
         <p className={`${termsOpen ? ' ' : 'hidden '}text-white`}>
