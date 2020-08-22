@@ -21,10 +21,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## TODO
 
-- [x] Component for displaying all the crypocurrencies added.
-- [x] Component for showing total net value of all added coins.
-- [x] Currency converter component to compare prices in different currencies.
-- [x] Redux Persist for not logged in visitors.
+- [x] Feature to select different currencies.
 
 ## API
 
