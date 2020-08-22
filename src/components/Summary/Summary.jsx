@@ -12,7 +12,7 @@ const Summary = ({ total, buyTotal }) => {
         {twoDecimalPlaces(total)}
       </h1>
       <h2 className={`xs:text-3xl sm:text-xl font-bold${change < 0 ? ' text-red-600' : ' text-green-500'}`}>
-        {change}
+        {isNaN(change) ? 0 : change}
         %
       </h2>
     </div>

@@ -32,6 +32,8 @@ function App() {
   const [myCryptos, setMyCryptos] = useState([]);
   const [ISO] = useState('usd');
 
+  console.log(isLoading);
+
   const checkLoggedIn = async () => {
     setLoggedIn(await isLoggedIn());
   };
@@ -100,9 +102,7 @@ function App() {
   }, [getMyCoins]);
 
   const updateViewport = (isTermsOpen) => {
-    console.log('upd');
     setMinViewportH(!isTermsOpen);
-    console.log(!minViewportH);
   };
 
   useEffect(() => {
@@ -111,7 +111,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getMyCoins();
+    if (loggedIn) {
+      getMyCoins();
+    } else {
+      setIsLoading(false);
+    }
   }, [loggedIn, getMyCoins]);
 
   return (
